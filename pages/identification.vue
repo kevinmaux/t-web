@@ -43,6 +43,8 @@
               v-model="signinUserName"
               class="input"
               type="text"
+              minlength="5"
+              maxlength="64"
               placeholder="login" >
           </li>
           <li>
@@ -51,6 +53,8 @@
               v-model="signinPassword"
               class="input"
               type="password"
+              minlength="5"
+              maxlength="64"
               placeholder="password" >
           </li>
           <li>
@@ -58,7 +62,7 @@
             <input
               v-model="signinMail"
               class="input"
-              type="text"
+              type="email"
               placeholder="truc@machin.fr" >
           </li>
           <li>
@@ -66,8 +70,9 @@
             <select
               v-model="signinGrade"
               class="select">
-              <option value="agent">Agent</option>
-              <option value="detective">Détective</option>
+              <option value="4">Agent</option>
+              <option value="3">Détective</option>
+              <option value="2">Master chief</option>
             </select>
           </li>
           <li>
@@ -101,7 +106,7 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(['login']),
+    ...mapMutations(['login', 'signin']),
     handleLogin() {
       if (!this.loginUserName || !this.loginPassword) {
         alert('Some field(s) are empty')
@@ -119,8 +124,12 @@ export default {
       ) {
         alert('Some field(s) are empty')
       } else {
-        this.login(this.signinUserName, this.signinPassword)
-        this.$router.push('home')
+        this.signin([
+          this.signinUserName,
+          this.signinPassword,
+          parseInt(this.signinGrade),
+          this.signinMail
+        ])
       }
     }
   }

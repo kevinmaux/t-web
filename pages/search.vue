@@ -1,19 +1,22 @@
 <template>
   <section class="container">
-    <div>
+    <div class="container">
       <router-link :to="{name: 'home'}">
         <h1 class="title">
           T-WEB
         </h1>
+        <h2 class="subtitle">
+          Search
+        </h2>
       </router-link>
     </div>
-    <div>
+    <div class="table">
       <ul>
-        <li>
-          <b class="label">Compnos</b>
+        <li class="is-expanded">
+          <b class="label is-inline">Compnos</b>
           <input
             v-model="COMPNOS"
-            class="input"
+            class="input is-inline"
             type="number"
             min="0"
             max="2147483647">
@@ -499,7 +502,7 @@ export default {
             searchTemp[key]['incident_type_description'] =
               data.data.data[key]['incident_type_description']
           } else {
-            searchTemp[key]['incident_type_description'] = ''
+            searchTemp[key]['incident_type_description'] = 'Unknown'
           }
         }
         this.searchList = searchTemp
