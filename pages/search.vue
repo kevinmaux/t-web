@@ -7,7 +7,7 @@
         </h1>
       </router-link>
     </div>
-    <div class="fields">
+    <div>
       <ul>
         <li>
           <b class="label">Compnos</b>
@@ -332,6 +332,22 @@
         </li>
       </ul>
     </div>
+    <div>
+      <ul>
+        <li 
+          v-for="(item, index) in searchList"
+          :key="index">
+          <router-link
+            :to="{
+              path: 'crime',
+              query: { id: item['compnos'] }}">
+            <b class="label">
+              {{ item['compnos'] }} - {{ item['incident_type_description'] }}
+            </b>
+          </router-link>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -377,7 +393,8 @@ export default {
       GDISTRICT: '',
       GDISTRICT_PRE2009: '',
       COMPUTEDCRIMECODE: '',
-      COMPUTEDCRIMECODEDESC: ''
+      COMPUTEDCRIMECODEDESC: '',
+      searchList: []
     }
   },
   computed: {
@@ -385,6 +402,20 @@ export default {
       token: state => state.token,
       perm: state => state.perm
     }),
+
+    searchItem: {
+      set: function(newData) {
+        for (var key in newData) {
+          this['searchList'][key] = []
+          this['searchList'][key]['compnos'] = newData[key]['compnos']
+          this['searchList'][key]['incident_type_description'] =
+            newData[key]['incident_type_description']
+        }
+      },
+      get: function() {
+        return this['searchList']
+      }
+    },
     data: {
       set: function(newData) {
         for (var key in newData) {
@@ -437,7 +468,6 @@ export default {
             if (keys[key] == 0) data[key.toLowerCase()] = parseInt(this[key])
             else data[key.toLowerCase()] = this[key]
         }
-        console.info(data)
         return data
       }
     }
@@ -454,15 +484,25 @@ export default {
         url: 'http://aetherion.fr:10005/search',
         data: {
           token: token,
-          filters: this.data,
-          limit: 10
+          filters: this.data
         }
       })
       if (data.data.state === 'error') {
         if (this.$store.state.perm <= 0) this.$router.push('identification')
         alert(data.data.data)
       } else {
-        console.info(data.data.data)
+        var searchTemp = []
+        for (var key in data.data.data) {
+          searchTemp[key] = []
+          searchTemp[key]['compnos'] = data.data.data[key]['compnos']
+          if (data.data.data[key]['incident_type_description']) {
+            searchTemp[key]['incident_type_description'] =
+              data.data.data[key]['incident_type_description']
+          } else {
+            searchTemp[key]['incident_type_description'] = ''
+          }
+        }
+        this.searchList = searchTemp
       }
     }
   }
