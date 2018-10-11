@@ -10,10 +10,18 @@
     <div class="fields">
       <ul>
         <li>
-          <b class="label">reporting area </b>
+          <b class="label">Compnos</b>
+          <input
+            v-model="COMPNOS"
+            class="input"
+            type="number"
+            min="0"
+            max="2147483647">
+        </li>
+        <li>
+          <b class="label">Reporting area </b>
           <input
             v-model="REPORTINGAREA"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="20" >
@@ -22,7 +30,6 @@
           <b class="label">Incident type description</b>
           <input
             v-model="INCIDENT_TYPE_DESCRIPTION"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="200" >
@@ -31,7 +38,6 @@
           <b class="label">Reported area</b>
           <input
             v-model="REPTDISTRICT"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -40,7 +46,6 @@
           <b class="label">From date</b>
           <input
             v-model="FROMDATE"
-            :readonly="perm > 3"
             class="input"
             type="date" >
         </li>
@@ -48,7 +53,6 @@
           <b class="label">To date</b>
           <input
             v-model="TODATE"
-            :readonly="perm > 3"
             class="input"
             type="date" >
         </li>
@@ -56,7 +60,6 @@
           <b class="label">Street name</b>
           <input
             v-model="STREETNAME"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -65,7 +68,6 @@
           <b class="label">Cross street name</b>
           <input
             v-model="XSTREETNAME"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -74,7 +76,6 @@
           <b class="label">Weapon type</b>
           <input
             v-model="WEAPONTYPE"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -83,7 +84,6 @@
           <b class="label">Building type</b>
           <input
             v-model="BUILDINGTYPE"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -92,7 +92,6 @@
           <b class="label">Place of entry</b>
           <input
             v-model="PLACEOFENTRY"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -101,7 +100,6 @@
           <b class="label">Number of suspect</b>
           <input
             v-model="PERPETRATORSNOS"
-            :readonly="perm > 3"
             class="input"
             type="number"
             min="0"
@@ -111,7 +109,6 @@
           <b class="label">Suspect transport informations</b>
           <input
             v-model="SUSPECTTRANSPORTATION"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -120,7 +117,6 @@
           <b class="label">Victim activity</b>
           <input
             v-model="VICTIMACTIVITY"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="300" >
@@ -129,7 +125,6 @@
           <b class="label">Unusual actions</b>
           <input
             v-model="UNUSUALACTIONS"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="300" >
@@ -138,7 +133,6 @@
           <b class="label">Weather</b>
           <input
             v-model="WEATHER"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -147,7 +141,6 @@
           <b>Neighborhood</b>
           <input
             v-model="NEIGHBORHOOD"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -156,7 +149,6 @@
           <b>Visibility</b>
           <input
             v-model="LIGHTING"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -165,7 +157,6 @@
           <b class="label">Clearance status</b>
           <input
             v-model="CLEARANCESTATUSDESC"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="100" >
@@ -174,16 +165,14 @@
           <b class="label">Main crime codes</b>
           <input
             v-model="MAIN_CRIMECODE"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="15" >
         </li>
         <li>
           <b class="label">Robbery type</b>
-          <select 
-            v-model="ROBBERY_TYPE" 
-            :disabled="perm > 3"
+          <select
+            v-model="ROBBERY_TYPE"
             class="select">
 
             <option value="Street">Street</option>
@@ -196,16 +185,14 @@
           <b class="label">Robbery attempt</b>
           <input
             v-model="ROBBERY_ATTEM"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="10" >
         </li>
         <li>
           <b class="label">Burglary time</b>
-          <select 
-            v-model="BURGLARY_TIME" 
-            :disabled="perm > 3" 
+          <select
+            v-model="BURGLARY_TIME"
             class="select">
             <option value="Day">Day</option>
             <option value="Night">Night</option>
@@ -213,18 +200,16 @@
         </li>
         <li>
           <b class="label">Domestic</b>
-          <input 
+          <input
             v-model="DOMESTIC"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="10" >
         </li>
         <li>
           <b class="label">Weapon type</b>
-          <select 
-            v-model="WEAPON_TYPE" 
-            :disabled="perm > 3" 
+          <select
+            v-model="WEAPON_TYPE"
             class="select">
             <option value="Gun">Gun</option>
             <option value="Knife">Knife</option>
@@ -234,9 +219,8 @@
         </li>
         <li>
           <b class="label">Shift</b>
-          <select 
-            v-model="SHIFT" 
-            :disabled="perm > 3" 
+          <select
+            v-model="SHIFT"
             class="select">
             <option value="Day">Day</option>
             <option value="First">First</option>
@@ -245,9 +229,8 @@
         </li>
         <li>
           <b class="label">Day week</b>
-          <select 
-            v-model="DAY_WEEK" 
-            :disabled="perm > 3" 
+          <select
+            v-model="DAY_WEEK"
             class="select">
             <option value="Monday">Monday</option>
             <option value="Tuesday">Tuesday</option>
@@ -260,9 +243,8 @@
         </li>
         <li>
           <b class="label">UCR</b>
-          <select 
-            v-model="UCRPART" 
-            :disabled="perm > 3" 
+          <select
+            v-model="UCRPART"
             class="select">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -273,7 +255,6 @@
           <b class="label">X coordinate</b>
           <input
             v-model="X"
-            :readonly="perm > 3"
             class="input"
             type="number"
             step="0.00000001" >
@@ -282,7 +263,6 @@
           <b class="label">Y coordinate</b>
           <input
             v-model="Y"
-            :readonly="perm > 3"
             class="input"
             type="number"
             step="0.00000001" >
@@ -291,7 +271,6 @@
           <b class="label">Reporting area geocoded</b>
           <input
             v-model="GREPORTING"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="50" >
@@ -300,7 +279,6 @@
           <b class="label">Sector geocoded location</b>
           <input
             v-model="GSECTOR"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="50" >
@@ -309,7 +287,6 @@
           <b class="label">Beat geocoded location</b>
           <input
             v-model="GBEAT"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="40" >
@@ -318,7 +295,6 @@
           <b class="label">District geocoded location</b>
           <input
             v-model="GDISTRICT"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="10" >
@@ -327,7 +303,6 @@
           <b class="label">District geocoded location pre 2009</b>
           <input
             v-model="GDISTRICT_PRE2009"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="10" >
@@ -336,7 +311,6 @@
           <b class="label">Computed Crime Code</b>
           <input
             v-model="COMPUTEDCRIMECODE"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="20" >
@@ -345,23 +319,15 @@
           <b class="label">Crime description</b>
           <input
             v-model="COMPUTEDCRIMECODEDESC"
-            :readonly="perm > 3"
             class="input"
             type="text"
             maxlength="255" >
         </li>
-        <li v-if="perm <= 3 && perm > 0">
+        <li>
           <button
             id="saveEdit"
             class="button"
-            @click="save">Save
-          </button>
-        </li>
-        <li v-if="perm <= 2 && perm > 0">
-          <button
-            id="deleteEdit"
-            class="button"
-            @click="remove">Delete
+            @click="search">Search
           </button>
         </li>
       </ul>
@@ -375,6 +341,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      COMPNOS: null,
       REPORTINGAREA: '',
       INCIDENT_TYPE_DESCRIPTION: '',
       REPTDISTRICT: '',
@@ -385,7 +352,7 @@ export default {
       WEAPONTYPE: '',
       BUILDINGTYPE: '',
       PLACEOFENTRY: '',
-      PERPETRATORSNOS: 0,
+      PERPETRATORSNOS: null,
       SUSPECTTRANSPORTATION: '',
       VICTIMACTIVITY: '',
       UNUSUALACTIONS: '',
@@ -402,8 +369,8 @@ export default {
       SHIFT: '',
       DAY_WEEK: '',
       UCRPART: '',
-      X: 0.0,
-      Y: 0.0,
+      X: null,
+      Y: null,
       GREPORTING: '',
       GSECTOR: '',
       GBEAT: '',
@@ -426,6 +393,7 @@ export default {
       },
       get: function() {
         var keys = {
+          COMPNOS: 0,
           REPORTINGAREA: '',
           INCIDENT_TYPE_DESCRIPTION: '',
           REPTDISTRICT: '',
@@ -453,8 +421,8 @@ export default {
           SHIFT: '',
           DAY_WEEK: '',
           UCRPART: '',
-          X: 0.0,
-          Y: 0.0,
+          X: 0,
+          Y: 0,
           GREPORTING: '',
           GSECTOR: '',
           GBEAT: '',
@@ -465,8 +433,11 @@ export default {
         }
         var data = {}
         for (var key in keys) {
-          data[key] = this[key]
+          if (this[key])
+            if (keys[key] == 0) data[key.toLowerCase()] = parseInt(this[key])
+            else data[key.toLowerCase()] = this[key]
         }
+        console.info(data)
         return data
       }
     }
@@ -474,83 +445,24 @@ export default {
   created: function() {
     if (!this.$store.state.perm || this.$store.state.perm <= 0)
       this.$router.push('identification')
-    if (this.$route.query['id']) this.getData()
   },
   methods: {
-    async save() {
-      var newData = {}
-      var sendData = {}
-      var url = ''
-      var token = this.$store.state.token
-      for (var key in this.data) {
-        if (this.data[key]) newData[key.toLowerCase()] = this.data[key]
-      }
-      if (this.$route.query['id']) {
-        sendData = {
-          token: token,
-          compnos: this.$route.query['id'],
-          data: newData
-        }
-        url = 'http://aetherion.fr:10005/update'
-      } else {
-        sendData = { token: token, data: newData }
-        url = 'http://aetherion.fr:10005/insert'
-      }
-      const data = await axios({
-        method: 'post',
-        url: url,
-        data: sendData
-      })
-      if (data.data.state === 'error') {
-        alert(data.data.data)
-      } else {
-        if (this.$route.query['id']) {
-          alert('Updated')
-        } else {
-          alert('Inserted - ' + data.data.data.compnos)
-        }
-        this.$router.push({
-          path: 'crime',
-          query: { id: data.data.data.compnos }
-        })
-      }
-    },
-    async remove() {
-      var id = parseInt(this.$route.query['id'])
-      var token = this.$store.state.token
-      const data = await axios({
-        method: 'post',
-        url: 'http://aetherion.fr:10005/delete',
-        data: {
-          token: token,
-          compnos: id
-        }
-      })
-      if (data.data.state === 'error') {
-        alert(data.data.data)
-      } else {
-        alert('Deleted')
-        this.$router.push('home')
-      }
-    },
-    async getData() {
-      var id = parseInt(this.$route.query['id'])
+    async search() {
       var token = this.$store.state.token
       const data = await axios({
         method: 'post',
         url: 'http://aetherion.fr:10005/search',
         data: {
           token: token,
-          filters: {
-            compnos: id
-          }
+          filters: this.data,
+          limit: 10
         }
       })
       if (data.data.state === 'error') {
         if (this.$store.state.perm <= 0) this.$router.push('identification')
         alert(data.data.data)
       } else {
-        this.data = data.data.data[0]
+        console.info(data.data.data)
       }
     }
   }

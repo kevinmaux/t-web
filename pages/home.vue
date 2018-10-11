@@ -34,7 +34,7 @@
             </router-link>
           </li>
           <li>
-            <router-link :to="{name: 'index'}">
+            <router-link :to="{name: 'identification'}">
               <button
                 id="disconnectButton"
                 class="button is-large"
@@ -57,15 +57,14 @@ export default {
     })
   },
   created: function() {
-    console.info(this.$store.state.token)
-    console.info(this.$store.state.perm)
-    if (this.$store.state.perm <= 0) this.$router.push('index')
+    if (!this.$store.state.perm || this.$store.state.perm <= 0)
+      this.$router.push('identification')
   },
   methods: {
     ...mapMutations(['removeToken']),
     logout() {
       this.removeToken()
-      this.$router.push('home')
+      this.$router.push('identification')
     }
   }
 }
