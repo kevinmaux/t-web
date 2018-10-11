@@ -48,25 +48,24 @@
   </section>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
-  data() {
-    return {
-      perm: 0
-    }
+  computed: {
+    ...mapState({
+      token: state => state.token,
+      perm: state => state.perm
+    })
   },
-  ...mapActions(['getToken', 'removeToken']),
   created: function() {
-    this.perm = 2
-    if (this.perm <= 0) this.$router.push('index')
+    console.info(this.$store.state.token)
+    console.info(this.$store.state.perm)
+    if (this.$store.state.perm <= 0) this.$router.push('index')
   },
   methods: {
+    ...mapMutations(['removeToken']),
     logout() {
       this.removeToken()
       this.$router.push('home')
-    },
-    isConnected() {
-      this.getToken()
     }
   }
 }

@@ -12,21 +12,24 @@
         </h2>
         <ul>
           <li>
-            <b>UserName </b>
+            <b class="label">UserName</b>
             <input
               v-model="loginUserName"
+              class="input"
               type="text"
               placeholder="login" >
           </li>
           <li>
-            <b>Password </b>
+            <b class="label">Password</b>
             <input
               v-model="loginPassword"
+              class="input"
               type="password"
               placeholder="password" >
           </li>
           <li>
             <button
+              class="button"
               @click="handleLogin">Login
             </button>
         </li></ul>
@@ -37,28 +40,41 @@
         </h2>
         <ul>
           <li>
-            <b>UserName </b>
+            <b class="label">UserName </b>
             <input
               v-model="signinUserName"
+              class="input"
               type="text"
               placeholder="login" >
           </li>
           <li>
-            <b>Password </b>
+            <b class="label">Password </b>
             <input
               v-model="signinPassword"
+              class="input"
               type="password"
               placeholder="password" >
           </li>
           <li>
+            <b class="label">Password </b>
+            <input
+              v-model="signinMail"
+              class="input"
+              type="text"
+              placeholder="truc@machin.fr" >
+          </li>
+          <li>
             <b>Grade </b>
-            <select v-model="signinGrade">
+            <select 
+              v-model="signinGrade" 
+              class="select">
               <option value="agent">Agent</option>
               <option value="detective">Détective</option>
             </select>
           </li>
           <li>
             <button
+              class="button"
               @click="handleSignin">SignIn
             </button>
           </li>
@@ -69,6 +85,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -76,26 +93,38 @@ export default {
       signinPassword: '',
       loginUserName: '',
       loginPassword: '',
+      signinMail: '',
       signinGrade: ''
     }
   },
+  computed: {
+    ...mapState({
+      perm: state => state.perm
+    })
+  },
+  created: function() {
+    if (this.$store.state.perm <= 0) this.$router.push('index')
+  },
   methods: {
-    setToken(token) {
-      global.sessionStorage.setItem('user-token', token)
-    },
+    ...mapMutations(['login']),
     handleLogin() {
       if (!this.loginUserName || !this.loginPassword) {
         alert('Some field(s) are empty')
       } else {
-        this.setToken(this.loginUserName + this.loginPassword)
-        this.$router.push('home')
+        this.login([this.loginUserName, this.loginPassword])
+        if (this.$store.state.token) this.$router.push('home')
       }
     },
     handleSignin() {
-      if (!this.signinPassword || !this.signinUserName || !this.signinGrade) {
+      if (
+        !this.signinPassword ||
+        !this.signinUserName ||
+        !this.signinGrade ||
+        !this.signinMail
+      ) {
         alert('Some field(s) are empty')
       } else {
-        this.setToken(this.signinUserName + this.signinPassword)
+        this.login(this.signinUserName, this.signinPassword)
         this.$router.push('home')
       }
     }

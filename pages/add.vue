@@ -31,7 +31,6 @@
             v-model="REPTDISTRICT"
             :readonly="perm > 3"
             type="text"
-            required
             maxlength="100" >
         </li>
         <li>
@@ -46,7 +45,6 @@
           <input
             v-model="TODATE"
             :readonly="perm > 3"
-            required
             type="date" >
         </li>
         <li>
@@ -188,7 +186,6 @@
             :disabled="perm > 3">
             <option value="Day">Day</option>
             <option value="Night">Night</option>
-            required
           </select>
         </li>
         <li>
@@ -232,7 +229,6 @@
             <option value="Friday">Friday</option>
             <option value="Saturday">Saturday</option>
             <option value="Sunday">Sunday</option>
-            required
           </select>
         </li>
         <li>
@@ -317,14 +313,14 @@
             type="text"
             maxlength="255" >
         </li>
-        <li v-if="perm < 3 && perm > 0">
+        <li v-if="perm <= 3 && perm > 0">
           <button
             id="saveEdit"
             class="button is-large"
             @click="save">Save
           </button>
         </li>
-        <li v-if="perm < 2 && perm > 0">
+        <li>
           <button
             id="deleteEdit"
             class="button is-large"
@@ -337,7 +333,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -376,26 +373,70 @@ export default {
       GDISTRICT: '',
       GDISTRICT_PRE2009: '',
       COMPUTEDCRIMECODE: '',
-      COMPUTEDCRIMECODEDESC: '',
-      url: url,
-      perm: 0
+      COMPUTEDCRIMECODEDESC: ''
+    }
+  },
+  computed: {
+    ...mapState({
+      token: state => state.token,
+      perm: state => state.perm
+    }),
+    data: {
+      set: function(newData) {
+        for (var key in newData) {
+          this[key.toUpperCase()] = newData[key]
+        }
+      },
+      get: function() {
+        return this.data()
+      }
     }
   },
   created: function() {
-    this.perm = 4
-    if (this.perm <= 0) this.$router.push('index')
-    console.info(this.url.searchParams.get('id'))
+    if (this.$store.state.perm <= 0) this.$router.push('index')
+    if (this.$route.query['id']) this.getData()
   },
-  ...mapActions(['getToken']),
   methods: {
-    isConnected() {
-      this.getToken()
-    },
     save() {
       alert('save')
     },
-    remove() {
-      alert('delete')
+    async remove() {
+      var id = parseInt(this.$route.query['id'])
+      var token = this.$store.state.token
+      const data = await axios({
+        method: 'post',
+        url: 'http://aetherion.fr:10005/delete',
+        data: {
+          token: token,
+          compnos: id
+        }
+      })
+      if (data.data.state === 'error') {
+        alert(data.data.data)
+      } else {
+        alert('Deleted')
+        this.$router.push('home')
+      }
+    },
+    async getData() {
+      var id = parseInt(this.$route.query['id'])
+      var token = this.$store.state.token
+      const data = await axios({
+        method: 'post',
+        url: 'http://aetherion.fr:10005/search',
+        data: {
+          token: token,
+          filters: {
+            compnos: id
+          }
+        }
+      })
+      if (data.data.state === 'error') {
+        if (this.$store.state.perm <= 0) this.$router.push('index')
+        alert(data.data.data)
+      } else {
+        this.data = data.data.data[0]
+      }
     }
   }
 }
