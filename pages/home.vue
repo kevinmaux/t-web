@@ -10,7 +10,7 @@
       <div class="links">
         <ul>
           <li v-if="perm < 4 && perm > 0">
-            <router-link :to="{name: 'add'}">
+            <router-link :to="{name: 'crime'}">
               <button
                 id="addButton"
                 class="button is-large">Add

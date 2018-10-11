@@ -1,11 +1,9 @@
 <template>
   <section class="container">
     <div>
-      <router-link :to="{name: 'index'}">
-        <h1 class="title">
-          T-WEB
-        </h1>
-      </router-link>
+      <h1 class="title">
+        T-WEB
+      </h1>
       <div id="AppLogin">
         <h2 class="subtitle">
           Login
