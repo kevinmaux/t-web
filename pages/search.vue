@@ -468,7 +468,7 @@ export default {
         var data = {}
         for (var key in keys) {
           if (this[key])
-            if (keys[key] == 0) data[key.toLowerCase()] = parseInt(this[key])
+            if (keys[key] === 0) data[key.toLowerCase()] = parseInt(this[key])
             else data[key.toLowerCase()] = this[key]
         }
         return data
