@@ -58,7 +58,7 @@
               placeholder="password" >
           </li>
           <li>
-            <b class="label">Password </b>
+            <b class="label">E-mail</b>
             <input
               v-model="signinMail"
               class="input"
