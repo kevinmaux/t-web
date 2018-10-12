@@ -87,7 +87,7 @@ export default {
       } else {
         var temp = {}
         for (var key in data.data.data) {
-          if (data.data.data[key]['active'] != 0) {
+          if (data.data.data[key]['active'] == 0) {
             temp[key] = {}
             temp[key]['id'] = data.data.data[key]['id']
             temp[key]['name'] = data.data.data[key]['name']
@@ -97,11 +97,26 @@ export default {
         this.userList = temp
       }
     },
-    validateUser(id) {
-      alert('validate ' + id)
+    async validateUser(id) {
+      id = parseInt(id)
+      var token = this.$store.state.token
+      const data = await axios({
+        method: 'post',
+        url: 'http://aetherion.fr:10005/validate',
+        data: {
+          token: token,
+          id_account: id
+        }
+      })
+      if (data.data.state === 'error') {
+        alert(data.data.data)
+      } else {
+        getList()
+        alert('Account activated')
+      }
     },
     deniedUser(id) {
-      alert('denied ' + id)
+      alert('Not implemented but denied ' + id)
     }
   }
 }
